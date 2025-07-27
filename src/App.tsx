@@ -1,11 +1,38 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 function App() {
-  const nagivate = useNavigate();
+  // State to manage loading screen visibility
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  // Simulate loading process (e.g., data fetching, initializing)
+  useEffect(() => {
+    // Simulate a loading time of 3 seconds (replace with real loading logic)
+    const timer = setTimeout(() => {
+      setIsLoading(false); // Set loading to false after 3 seconds
+    }, 3000);
+
+    // Cleanup the timer on unmount
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleClick = () => {
-    nagivate("/Camera");
+    navigate("/Camera"); // Navigate to the Camera route
   };
 
+  if (isLoading) {
+    // Loading screen (will display until loading is false)
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">hakdog...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Main content of the app
   return (
     <>
       <div className="container-fluid d-flex flex-column vh-100">
@@ -16,7 +43,7 @@ function App() {
           style={{ gap: "1rem" }}
         >
           {" "}
-          {/* Added g-4 for gap */}
+          {/* Added gap for spacing */}
           <div
             className="col-md-auto card btn"
             style={{ width: "18rem" }}
@@ -39,7 +66,7 @@ function App() {
             <img
               src="src/assets/polaroid.jpg"
               className="card-img-top"
-              alt="portrait"
+              alt="polaroid"
               style={{ height: "60%" }}
             />
             <div className="card-body">
